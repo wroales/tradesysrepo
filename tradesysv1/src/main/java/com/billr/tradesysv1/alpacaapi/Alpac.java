@@ -82,11 +82,11 @@ public class Alpac {
    }
 
 	public Alpac() {
-		// TODO Auto-generated constructor stub
 		loadAlpacaProperties();
 		
 	}
 
+	// Send JSON messages to Alpaca web service
     public String alpacAPI(String func) {
     	
         CloseableHttpClient httpClient = null;
