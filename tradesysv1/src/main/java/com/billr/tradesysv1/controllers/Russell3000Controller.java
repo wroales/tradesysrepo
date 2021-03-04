@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.billr.tradesysv1.models.Russell3000;
 import com.billr.tradesysv1.repository.Russell3000Repository;
 
-
+//Russell
 @Controller
 public class Russell3000Controller {
 
