@@ -11,6 +11,6 @@ import com.billr.tradesysv1.models.Position;
 @Repository
 public interface PositionRepository extends JpaRepository<Position, Long> {
 	
-	 List<Position> findByOrderBySymbolAsc();
-	
+	 List<Position> findAllByOrderBySymbolAsc();
+
 }

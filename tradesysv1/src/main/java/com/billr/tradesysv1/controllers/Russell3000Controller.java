@@ -1,17 +1,20 @@
 package com.billr.tradesysv1.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
-//import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.billr.tradesysv1.models.Position;
 import com.billr.tradesysv1.models.Russell3000;
-import com.billr.tradesysv1.repository.AccountRepository;
 import com.billr.tradesysv1.repository.Russell3000Repository;
 
 
@@ -30,14 +33,26 @@ public class Russell3000Controller {
 		return this.russell3000Repository;
 	}
 
-	@GetMapping("/russell")
-	public String showRussellPage(Model model) {
-		
-		
-		Iterable<Russell3000> allRussell = russell3000Repository.findAll();
-			
-		model.addAttribute("allRussell", allRussell);
-		return "russell";
-	}
+//	@GetMapping("/russell")
+//	public String showRussellPage(Model model) {
+//		
+//		
+//		Iterable<Russell3000> allRussell = russell3000Repository.findAll();
+//			
+//		model.addAttribute("allRussell", allRussell);
+//		return "russell";
+//	}
 
+	@GetMapping("/russell")
+	public String showRussellPage(HttpServletRequest request, ModelMap modelMap) {
+		List<Russell3000> russell = (List<Russell3000>) russell3000Repository.findAll();
+		PagedListHolder pagedListHolder = new PagedListHolder(russell);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(14);
+		modelMap.put("pagedListHolder", pagedListHolder);
+		return "russell/index";
+	}
+	
+	
 }

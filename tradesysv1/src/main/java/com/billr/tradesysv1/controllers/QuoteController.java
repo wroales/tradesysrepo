@@ -41,12 +41,28 @@ public class QuoteController {
 		Alpac ap = new Alpac();
 		System.out.println("OK1");
 		Quote nq = new Quote();
-		nq = ap.getQuote(qte.getSymbol());	
-		System.out.println("Quote="+nq.getSymbol()+" bid="+nq.getLast().getBidprice());
-		System.out.println("TS    ="+nq.getLast().getTimestamp());	
+		nq = ap.getQuote(qte.getSymbol().toUpperCase());
+		
+		try {
+			System.out.println("Quote="+nq.getSymbol()+" bid="+nq.getLast().getBidprice());
+			System.out.println("TS    ="+nq.getLast().getTimestamp());
+	    } catch (Exception e) {
+	        System.out.println("Quote retrieve. Something went wrong!!!!");
+	        return "redirect:/quoteEntryerror";
+	    }
+							
 		this.add(nq);
 					
 		return "redirect:/quotecache";
+	}
+	
+	
+	@GetMapping("/quoteEntryerror")
+	public String tradeEntryError(Model model) {	
+		String emsg = "Stock Symbol is Not Found";
+		model.addAttribute("emsg", emsg);
+		return "qte_error";
+		
 	}
 	
 	public ArrayList getCachedSymbols()

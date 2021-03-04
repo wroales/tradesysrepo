@@ -43,7 +43,7 @@ public class PositionController {
 		if (!model.containsAttribute("position")) {
 			model.addAttribute("position", new Position());
 		}
-		Iterable<Position> allPositions = positionRepository.findAll();
+		Iterable<Position> allPositions = positionRepository.findAllByOrderBySymbolAsc();
 			
 		model.addAttribute("allPositions", allPositions);
 		return "positions";
@@ -56,6 +56,8 @@ public class PositionController {
 				
 	 	ArrayList<Position> positions; 
 		positions = ap.getPositions();
+		
+		//positions.sort((h1, h2) -> h1.getSymbol().compareTo(h2.getSymbol()));
 	  
 		// clean out the table for the refresh from API
 	 	positionRepository.deleteAll();
@@ -67,6 +69,6 @@ public class PositionController {
 //      	   System.out.println("SYMBOL =="+pos.getSymbol());
 //      	   System.out.println("POS    =="+pos.getQty());
          }   
-
+        
     }
 }
